@@ -7,8 +7,16 @@ const getAllUsers = () => User.findAll(); // requisito 5
 
 const findOneUsuario = (email) => User.findOne({ where: { email } });
 
+const getByUserId = async (userId) => { // requisito 6
+  const user = await User.findByPk(userId, {
+    attributes: { exclude: ['password'], include: ['display_name'] },
+  });
+  return user;
+};
+
 module.exports = {
   createUser,
   getAllUsers,
   findOneUsuario,
+  getByUserId,
   };

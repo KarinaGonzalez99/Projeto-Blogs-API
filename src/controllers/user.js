@@ -35,7 +35,7 @@ const createUser = async (req, res) => {
   }
 };
 
-const getAllUsers = async (req, res) => {
+const getAllUsers = async (req, res) => { // requisito 5
   try {
     const users = await userServices.getAllUsers();
     const allUsers = users.map(({ id, display_name: displayName, email, image }) => ({
@@ -51,7 +51,18 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+const getUserById = async (req, res) => { // requisito 6
+  const { params } = req;
+  const user = await userServices.getByUserId(params.id);
+  if (!user || user.dataValues === undefined) {
+    return res.status(404).json({ message: 'User does not exist' });
+  }
+  const { id, display_name: displayName, email, image } = user;
+  return res.status(200).json({ id, displayName, email, image });
+};
+
 module.exports = {
   createUser,
   getAllUsers,
+  getUserById,
 };
