@@ -37,8 +37,14 @@ const createUser = async (req, res) => {
 
 const getAllUsers = async (req, res) => {
   try {
-    const users = await userServices.getUsers();
-    res.status(200).json(users);
+    const users = await userServices.getAllUsers();
+    const allUsers = users.map(({ id, display_name: displayName, email, image }) => ({
+      id,
+      displayName,
+      email,
+      image,
+    }));
+    res.status(200).json(allUsers);
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: 'Internal server error' });
