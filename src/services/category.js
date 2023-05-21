@@ -10,6 +10,17 @@ const createCategory = async (name) => {
      }
    };
 
+   const getAllCategories = async () => {
+     try {
+       const categories = await Category.findAll();
+       return categories.map((category) => category.toJSON());
+     } catch (error) {
+       console.error(error);
+       throw new Error('Error retrieving categories');
+     }
+   };
+
 module.exports = {
   createCategory,
+  getAllCategories,
 };
