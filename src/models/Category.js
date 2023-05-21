@@ -1,5 +1,5 @@
 const Category = (sequelize, DataTypes) => { // requisito 7
-     const categorySchema = sequelize.define('Category', {
+     const Category = sequelize.define('Category', {
        id: {
          type: DataTypes.INTEGER,
          primaryKey: true,
@@ -7,11 +7,16 @@ const Category = (sequelize, DataTypes) => { // requisito 7
        },
        name: {
          type: DataTypes.STRING,
-         allowNull: false,
-       },
-     });
+        },
+      },
+      {
+        timestamps: false,
+        tableName: 'categories', // requisito 8
+        undescored: true,
+      }
+    );
    
-     return categorySchema;
+     return Category;
    };
    
    module.exports = Category;
