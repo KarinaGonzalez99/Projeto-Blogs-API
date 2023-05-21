@@ -1,4 +1,6 @@
 const express = require('express');
+const loginRouter = require('./router/login'); // requisito 3
+const userRouter = require('./router/user'); // requisito 4
 
 // ...
 
@@ -10,6 +12,9 @@ app.get('/', (_request, response) => {
 });
 
 app.use(express.json());
+
+app.use('/login', loginRouter); // requisito 3
+app.use('/user', userRouter); // requisito 4
 
 // ...
 
