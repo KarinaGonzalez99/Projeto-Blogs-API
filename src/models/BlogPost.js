@@ -33,6 +33,7 @@ const BlogPost = (sequelize, DataTypes) => { // requisito 10
        {
          underscored: true,
          timestamps: false,
+         tableName: 'blog_posts',
        }
      );
    

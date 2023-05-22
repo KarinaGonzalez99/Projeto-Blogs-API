@@ -1,30 +1,14 @@
 const postService = require('../services/blogPost');
 
-function formatPost(post) {
-  const { id: postId, title, content, userId, published, updated, User, Categories } = post;
-  return {
-    id: postId,
-    title,
-    content,
-    userId,
-    published,
-    updated,
-    user: { id: User.id, displayName: User.displayName, email: User.email, image: User.image },
-    categories: Categories.map(({ id, name }) => ({ id, name })),
-  };
+const getPosts = async (req, res) => {
+  try { 
+    const postBlog = await postService.getPosts();
+    return res.status(200).json(postBlog);
+} catch (error) {
+    return res.status(500).json({ message: error.message });
 }
+};
 
-async function getPosts(req, res) {
-  try {
-    const posts = await postService.getAllPosts();
-
-    const formattedPosts = posts.map(formatPost);
-
-    res.status(200).json(formattedPosts);
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: 'Erro ao buscar os posts' });
-  }
-}
-
-module.exports = { getPosts };
+module.exports = {
+  getPosts,
+};

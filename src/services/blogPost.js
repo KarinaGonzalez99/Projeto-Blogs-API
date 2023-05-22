@@ -1,20 +1,18 @@
-const { BlogPost, User, Category } = require('../models');
+const { User, Category, BlogPost } = require('../models');
 
-async function getAllPosts() {
-  try {
-    const posts = await BlogPost.findAll({
-      include: [
-        { model: User, attributes: ['id', 'displayName', 'email', 'image'] },
-        { model: Category, attributes: ['id', 'name'] },
-      ],
-    });
-
-    return posts;
-  } catch (error) {
-    throw new Error('Erro ao buscar os posts');
-  }
-}
+const getPosts = async () => {
+  const postBlog = await BlogPost.findAll({
+    include: [
+      { model: User, 
+        as: 'user', 
+        attributes: { exclude: ['password'] } },
+      { model: Category, 
+        as: 'categories' },
+    ],
+  });
+  return postBlog;
+};
 
 module.exports = {
-  getAllPosts,
+  getPosts,
 };
